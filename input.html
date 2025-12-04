@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Focus Effect Visualization</title>
+    <style>
+        :root {
+            /* Warna Gradient (Capra Ramp) dari Index.html */
+            --capra-ramp-1: #ffc400;
+            --capra-ramp-2: #ff9100;
+            --capra-ramp-3: #ff530f;
+            --capra-ramp-4: #e62c6d;
+            --capra-ramp-5: #b25aff;
+
+            /* Warna Dasar Simulasi Theme */
+            --color-background: #ffffff;
+            --color-border: #d1d5db; /* Warna border saat tidak fokus (abu-abu) */
+            --color-text: #1f2937;
+            --color-placeholder: #9ca3af;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+            color: var(--color-text);
+        }
+
+        /* --- CORE STYLES DARI APLIKASI --- */
+
+        .chat-input-container {
+            --border-radius: 0.75rem; /* Sedikit lebih bulat untuk demo */
+            --border-thickness: 2px;  /* Ditebalkan sedikit agar efek lebih jelas */
+            
+            position: relative;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            
+            /* Bayangan halus untuk estetika demo */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Elemen Border Animasi */
+        .chat-input-container::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            
+            /* Membuat border lebih besar dari konten asli */
+            inset: calc(-1 * var(--border-thickness)); 
+            border-radius: calc(var(--border-radius) + var(--border-thickness));
+            
+            /* Gradient Magic */
+            background: linear-gradient(
+                -45deg,
+                var(--capra-ramp-5) 0%,
+                var(--capra-ramp-4) 8%,
+                var(--capra-ramp-3) 17%,
+                var(--capra-ramp-2) 25%,
+                var(--capra-ramp-1) 33%,
+                var(--color-border) 40%, 
+                var(--color-border) 100%
+            );
+            
+            background-size: 300% 300%; 
+            background-position: 0% 0%;   /* Posisi Awal: Abu-abu/Border Biasa */
+            
+            transition: background-position 0.5s ease;
+            transition-delay: .1s; /* Delay saat kehilangan fokus (smooth exit) */
+            z-index: 0;
+        }
+
+        /* Trigger Animasi: Geser background position */
+        .chat-input-container:focus-within::after {
+            background-position: 100% 100%; /* Posisi Akhir: Warna-warni */
+            transition-delay: 0s; /* Langsung berubah saat fokus */
+        }
+
+        /* Konten Dalam (Input Field) */
+        .chat-input-inner {
+            position: relative;
+            z-index: 1; /* Pastikan di atas pseudo-element border */
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        textarea {
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 1rem;
+            color: var(--color-text);
+            font-family: inherit;
+            min-height: 60px;
+        }
+
+        textarea::placeholder {
+            color: var(--color-placeholder);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Gradient Border Focus Visualization</h2>
+
+    <!-- Container Utama -->
+    <div class="chat-input-container">
+        <!-- Inner Wrapper (Background Putih) -->
+        <div class="chat-input-inner">
+            <textarea placeholder="Klik di sini untuk melihat efek animasi..."></textarea>
+        </div>
+    </div>
+
+</body>
+</html>

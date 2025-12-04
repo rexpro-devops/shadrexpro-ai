@@ -1,0 +1,9 @@
+{
+  "name": "Omnichat-v4-production",
+  "description": "Omnichat-v4",
+  "requestFramePermissions": [
+    "microphone",
+    "camera",
+    "display-capture"
+  ]
+}
