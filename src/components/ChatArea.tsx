@@ -400,57 +400,63 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
   const renderMicOrSendButton = () => {
       if (isStreamingText) {
           return (
-              <button
+              <Button
                   type="button"
-                  className="w-10 h-10 text-text-secondary rounded-lg flex items-center justify-center"
+                  variant="ghost"
+                  size="icon"
                   disabled
+                  aria-label="Streaming text"
               >
                   <Loader2 className="h-5 w-5 animate-spin" />
-              </button>
+              </Button>
           );
       }
 
       if (isVoiceRecording) {
           return (
-              <button
+              <Button
                   type="button"
                   onClick={handleMicClick}
-                  className="w-10 h-10 bg-card rounded-lg flex items-center justify-center transition-colors hover:bg-interactive-hover"
+                  variant="secondary"
+                  size="icon"
                   aria-label="Stop recording"
                   data-tooltip-text="Stop recording"
                   data-tooltip-position="top"
+                  className="bg-card hover:bg-interactive-hover"
               >
                   <Mic className="h-5 w-5 text-red-600 animate-pulse" />
-              </button>
+              </Button>
           );
       }
-      
+
       if (isSendDisabled) {
           return (
-              <button 
+              <Button
                   type="button"
                   onClick={handleMicClick}
-                  className={`w-10 h-10 text-text-secondary hover:text-text-primary rounded-lg flex items-center justify-center transition-colors hover:bg-interactive-hover`}
+                  variant="ghost"
+                  size="icon"
                   aria-label="Start Voice Input"
                   data-tooltip-text="Voice Input"
                   data-tooltip-position="top"
               >
                   <Mic className="h-5 w-5" />
-              </button>
+              </Button>
           );
       }
 
       return (
-          <button
+          <Button
               type="submit"
-              className="w-10 h-10 bg-text-primary text-background rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              size="icon"
               aria-label="Send message"
               data-tooltip-text="Send message"
               data-tooltip-position="top"
               disabled={isSendDisabled}
+              className="bg-text-primary text-background hover:opacity-90"
           >
               <ArrowUp className="h-6 w-6" />
-          </button>
+          </Button>
       );
   };
 
@@ -485,30 +491,34 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
                   <p className="font-semibold text-lg text-text-primary">Tools</p>
               </div>
               <div className="space-y-2">
-                  <button
+                  <Button
+                      variant={store.isCodeInterpreterActive ? "secondary" : "ghost"}
                       onClick={() => { store.toggleCodeInterpreter(); setIsToolsBottomSheetOpen(false); }}
-                      className={`w-full text-left flex items-center gap-3 px-4 py-3 text-base rounded-lg transition-colors ${store.isCodeInterpreterActive ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-interactive-hover'}`}
+                      className={`w-full justify-start gap-3 ${store.isCodeInterpreterActive ? 'bg-accent/10 text-accent' : ''}`}
                   >
                       <TerminalSquare className="h-5 w-5" /> Canvas
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                      variant={store.isDeepResearchToggled ? "secondary" : "ghost"}
                       onClick={() => { store.toggleDeepResearch(); setIsToolsBottomSheetOpen(false); }}
-                      className={`w-full text-left flex items-center gap-3 px-4 py-3 text-base rounded-lg transition-colors ${store.isDeepResearchToggled ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-interactive-hover'}`}
+                      className={`w-full justify-start gap-3 ${store.isDeepResearchToggled ? 'bg-accent/10 text-accent' : ''}`}
                   >
                       <Microscope className="h-5 w-5" /> Deep Research
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                      variant={store.isImageToolActive ? "secondary" : "ghost"}
                       onClick={() => { store.toggleImageTool(); setIsToolsBottomSheetOpen(false); }}
-                      className={`w-full text-left flex items-center gap-3 px-4 py-3 text-base rounded-lg transition-colors ${store.isImageToolActive ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-interactive-hover'}`}
+                      className={`w-full justify-start gap-3 ${store.isImageToolActive ? 'bg-accent/10 text-accent' : ''}`}
                   >
                       <Image className="h-5 w-5" /> Images
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                      variant={store.isVideoToolActive ? "secondary" : "ghost"}
                       onClick={() => { store.toggleVideoTool(); setIsToolsBottomSheetOpen(false); }}
-                      className={`w-full text-left flex items-center gap-3 px-4 py-3 text-base rounded-lg transition-colors ${store.isVideoToolActive ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-interactive-hover'}`}
+                      className={`w-full justify-start gap-3 ${store.isVideoToolActive ? 'bg-accent/10 text-accent' : ''}`}
                   >
                       <Video className="h-5 w-5" /> Videos
-                  </button>
+                  </Button>
               </div>
           </div>
         </>
@@ -543,16 +553,18 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
                             <span className="text-xs text-text-secondary text-center break-all line-clamp-3">{file.name}</span>
                           </div>
                         )}
-                        <button 
+                        <Button
                           type="button"
-                          onClick={() => handleRemoveFile(index)} 
-                          className="absolute -top-1 -right-1 bg-text-secondary text-background rounded-full h-4 w-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => handleRemoveFile(index)}
+                          variant="secondary"
+                          size="icon"
+                          className="absolute -top-1 -right-1 h-4 w-4 p-0 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"
                           aria-label={`Remove ${file.name}`}
                           data-tooltip-text="Remove"
                           data-tooltip-position="top"
                         >
                           <X className="h-3 w-3" />
-                        </button>
+                        </Button>
                       </div>
                     ))}
                   </div>
@@ -582,22 +594,24 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
                         className="hidden"
                         accept="image/*,text/*,application/pdf,application/json,application/javascript,text/html,text/css,text/markdown"
                       />
-                      <button 
-                        type="button" 
-                        onClick={handleAttachClick} 
-                        data-tooltip-text="Attach files" 
-                        data-tooltip-position="top" 
-                        className="text-text-secondary hover:text-text-primary p-2 rounded-lg hover:bg-interactive-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                      <Button
+                        type="button"
+                        onClick={handleAttachClick}
+                        variant="ghost"
+                        size="icon"
+                        data-tooltip-text="Attach files"
+                        data-tooltip-position="top"
                         aria-label="Attach files"
                         disabled={isAttachmentDisabled || isGuest}
                       >
                           <Paperclip className="h-5 w-5" />
-                      </button>
+                      </Button>
                       <div ref={toolsMenuRef} className="relative flex items-center">
-                        <button
+                        <Button
                           type="button"
                           onClick={handleToolsButtonClick}
-                          className={`p-2 rounded-lg transition-colors ${isToolsMenuOpen || isToolsBottomSheetOpen ? 'bg-interactive-hover text-text-primary' : 'text-text-secondary hover:text-text-primary hover:bg-interactive-hover'}`}
+                          variant={isToolsMenuOpen || isToolsBottomSheetOpen ? "secondary" : "ghost"}
+                          size="icon"
                           aria-label="Tools"
                           aria-haspopup="true"
                           aria-expanded={isToolsMenuOpen}
@@ -605,7 +619,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
                           data-tooltip-position="top"
                         >
                           <Settings2 className="h-5 w-5" />
-                        </button>
+                        </Button>
                         
                         {!isMobile && (
                             <div
@@ -613,71 +627,82 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isMobile }) => {
                               aria-hidden={!isToolsMenuOpen}
                               role="menu"
                             >
-                                <button
+                                <Button
                                   type="button"
                                   onClick={store.toggleCodeInterpreter}
-                                  className={`flex items-center gap-2 whitespace-nowrap px-3 py-2 rounded-lg border shadow-sm transition-colors text-sm font-medium ${store.isCodeInterpreterActive ? 'bg-accent/10 text-accent border-accent/20' : 'bg-background text-text-primary border-border hover:bg-interactive-hover'}`}
+                                  variant={store.isCodeInterpreterActive ? "secondary" : "outline"}
+                                  size="sm"
+                                  className={`gap-2 ${store.isCodeInterpreterActive ? 'bg-accent/10 text-accent border-accent/20' : ''}`}
                                   role="menuitem"
                                 >
                                     <TerminalSquare className="h-5 w-5 flex-shrink-0" />
                                     <span>Canvas</span>
-                                </button>
-                                 <button
+                                </Button>
+                                <Button
                                   type="button"
                                   onClick={store.toggleDeepResearch}
-                                  className={`flex items-center gap-2 whitespace-nowrap px-3 py-2 rounded-lg border shadow-sm transition-colors text-sm font-medium ${store.isDeepResearchToggled ? 'bg-accent/10 text-accent border-accent/20' : 'bg-background text-text-primary border-border hover:bg-interactive-hover'}`}
+                                  variant={store.isDeepResearchToggled ? "secondary" : "outline"}
+                                  size="sm"
+                                  className={`gap-2 ${store.isDeepResearchToggled ? 'bg-accent/10 text-accent border-accent/20' : ''}`}
                                   role="menuitem"
                                 >
                                     <Microscope className="h-5 w-5 flex-shrink-0" />
                                     <span>Deep Research</span>
-                                </button>
-                                 <button
+                                </Button>
+                                <Button
                                   type="button"
                                   onClick={store.toggleImageTool}
-                                  className={`flex items-center gap-2 whitespace-nowrap px-3 py-2 rounded-lg border shadow-sm transition-colors text-sm font-medium ${store.isImageToolActive ? 'bg-accent/10 text-accent border-accent/20' : 'bg-background text-text-primary border-border hover:bg-interactive-hover'}`}
+                                  variant={store.isImageToolActive ? "secondary" : "outline"}
+                                  size="sm"
+                                  className={`gap-2 ${store.isImageToolActive ? 'bg-accent/10 text-accent border-accent/20' : ''}`}
                                   role="menuitem"
                                 >
                                     <Image className="h-5 w-5 flex-shrink-0" />
                                     <span>Images</span>
-                                </button>
-                                 <button
+                                </Button>
+                                <Button
                                   type="button"
                                   onClick={store.toggleVideoTool}
-                                  className={`flex items-center gap-2 whitespace-nowrap px-3 py-2 rounded-lg border shadow-sm transition-colors text-sm font-medium ${store.isVideoToolActive ? 'bg-accent/10 text-accent border-accent/20' : 'bg-background text-text-primary border-border hover:bg-interactive-hover'}`}
+                                  variant={store.isVideoToolActive ? "secondary" : "outline"}
+                                  size="sm"
+                                  className={`gap-2 ${store.isVideoToolActive ? 'bg-accent/10 text-accent border-accent/20' : ''}`}
                                   role="menuitem"
                                 >
                                     <Video className="h-5 w-5 flex-shrink-0" />
                                     <span>Videos</span>
-                                </button>
+                                </Button>
                             </div>
                         )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                         {store.isLoading ? (
-                            <button
+                            <Button
                                 type="button"
                                 onClick={store.stopGeneration}
-                                className="w-10 h-10 bg-text-primary text-background rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity"
+                                size="icon"
                                 aria-label="Stop generation"
                                 data-tooltip-text="Stop generation"
                                 data-tooltip-position="top"
+                                className="bg-text-primary text-background hover:opacity-90"
                             >
                                 <Square className="h-4 w-4 fill-current" />
-                            </button>
+                            </Button>
                         ) : (
                             <>
                                 {renderMicOrSendButton()}
-                                <button 
+                                <Button
                                     type="button"
                                     onClick={handleStartLiveConversation}
-                                    className={`w-10 h-10 text-text-primary bg-card rounded-lg flex items-center justify-center transition-colors`}
+                                    variant="secondary"
+                                    size="icon"
                                     aria-label="Voice Mode"
                                     data-tooltip-text="Voice Mode"
                                     data-tooltip-position="top"
+                                    className="bg-card"
                                 >
                                     <AudioLines className="h-5 w-5" />
-                                </button>
+                                </Button>
                             </>
                         )}
                     </div>

@@ -70,14 +70,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen }) => {
                 <ScrollArea className="h-[160px] border rounded-md">
                   <div className="space-y-2 p-4">
                     {localUsers.map((user) => (
-                      <button
+                      <Button
                         key={user.id}
                         onClick={() => handleLogin(user)}
-                        className="w-full text-left flex items-center gap-3 p-3 rounded-lg hover:bg-accent transition-colors"
+                        variant="ghost"
+                        className="w-full justify-start gap-3"
                       >
                         <Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                         <span className="font-medium">{user.name}</span>
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </ScrollArea>
